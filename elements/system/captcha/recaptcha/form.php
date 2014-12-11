@@ -1,4 +1,6 @@
 <?php
+defined('C5_EXECUTE') or die('Access denied.');
+
 /** @var \Concrete\Core\Form\Service\Form $form */
 $form = Core::make('helper/form');
 $config = Package::getByHandle('ec_recaptcha')->getConfig();
