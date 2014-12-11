@@ -3,6 +3,7 @@
 namespace Concrete\Package\EcRecaptcha\Src\Captcha;
 
 use Concrete\Core\Captcha\Controller as CaptchaController;
+use Concrete\Core\Http\ResponseAssetGroup;
 use Concrete\Core\Package\Package;
 use Concrete\Core\Utility\IPAddress;
 use Config;
@@ -28,7 +29,10 @@ class RecaptchaController extends CaptchaController
     function showInput()
     {
         $config = Package::getByHandle('ec_recaptcha')->getConfig();
-        echo '<script src="https://www.google.com/recaptcha/api.js"></script>';
+
+        $rag = ResponseAssetGroup::get();
+        $rag->addFooterAsset('<script src="https://www.google.com/recaptcha/api.js"></script>');
+
         echo '<div class="g-recaptcha" data-sitekey="' . $config->get('captcha.site_key') . '"></div>';
         echo '<noscript>
           <div style="width: 302px; height: 352px;">
