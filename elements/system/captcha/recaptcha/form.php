@@ -17,3 +17,8 @@ $config = Package::getByHandle('ec_recaptcha')->getConfig();
     <?= $form->label('secret', t('Secret Key')) ?>
     <?= $form->text('secret', $config->get('captcha.secret_key', '')) ?>
 </div>
+
+<div class="form-group">
+    <?= $form->label('theme', t('Theme')) ?>
+    <?= $form->select('theme', array('light' => t('Light'), 'dark' => t('Dark')), $config->get('captcha.theme', 'light')) ?>
+</div>

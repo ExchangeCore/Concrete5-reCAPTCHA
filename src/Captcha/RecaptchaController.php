@@ -21,6 +21,7 @@ class RecaptchaController extends CaptchaController
         $config = Package::getByHandle('ec_recaptcha')->getConfig();
         $config->save('captcha.site_key', $data['site']);
         $config->save('captcha.secret_key', $data['secret']);
+        $config->save('captcha.theme', $data['theme']);
     }
 
     /**
@@ -33,7 +34,7 @@ class RecaptchaController extends CaptchaController
         $rag = ResponseAssetGroup::get();
         $rag->addFooterAsset('<script src="https://www.google.com/recaptcha/api.js"></script>');
 
-        echo '<div class="g-recaptcha" data-sitekey="' . $config->get('captcha.site_key') . '"></div>';
+        echo '<div class="g-recaptcha" data-sitekey="' . $config->get('captcha.site_key') . '" data-theme="' . $config->get('captcha.theme') . '"></div>';
         echo '<noscript>
           <div style="width: 302px; height: 352px;">
             <div style="width: 302px; height: 352px; position: relative;">
