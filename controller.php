@@ -18,7 +18,7 @@ class Controller extends Package
 
     public function getPackageName()
     {
-        return t('reCAPTCHA');
+        return t('ExchangeCore reCAPTCHA');
     }
 
     public function getPackageDescription()
