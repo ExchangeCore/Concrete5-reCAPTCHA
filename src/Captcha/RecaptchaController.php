@@ -22,6 +22,7 @@ class RecaptchaController extends CaptchaController
         $config->save('captcha.site_key', $data['site']);
         $config->save('captcha.secret_key', $data['secret']);
         $config->save('captcha.theme', $data['theme']);
+        $config->save('captcha.language', $data['language']);
     }
 
     /**
@@ -30,9 +31,14 @@ class RecaptchaController extends CaptchaController
     function showInput()
     {
         $config = Package::getByHandle('ec_recaptcha')->getConfig();
-
         $rag = ResponseAssetGroup::get();
-        $rag->addFooterAsset('<script src="https://www.google.com/recaptcha/api.js"></script>');
+
+        $lang = $config->get('captcha.language');
+        if ($lang !== 'auto') {
+            $rag->addFooterAsset('<script src="https://www.google.com/recaptcha/api.js?hl=' . $lang . '"></script>');
+        } else {
+            $rag->addFooterAsset('<script src="https://www.google.com/recaptcha/api.js"></script>');
+        }
 
         echo '<div class="g-recaptcha" data-sitekey="' . $config->get('captcha.site_key') . '" data-theme="' . $config->get('captcha.theme') . '"></div>';
         echo '<noscript>
