@@ -5,6 +5,7 @@ namespace Concrete\Package\EcRecaptcha\Src\Captcha;
 use Concrete\Core\Captcha\Controller as CaptchaController;
 use Concrete\Core\Package\Package;
 use Concrete\Core\Utility\IPAddress;
+use Config;
 use Core;
 
 /**
@@ -66,6 +67,21 @@ class RecaptchaController extends CaptchaController
         );
 
         $ch = curl_init('https://www.google.com/recaptcha/api/siteverify?' . $qsa);
+
+        if (Config::get('concrete.proxy.host') != null) {
+            curl_setopt($ch, CURLOPT_PROXY, Config::get('concrete.proxy.host'));
+            curl_setopt($ch, CURLOPT_PROXYPORT, Config::get('concrete.proxy.port'));
+
+            // Check if there is a username/password to access the proxy
+            if (Config::get('concrete.proxy.user') != null) {
+                curl_setopt(
+                    $ch,
+                    CURLOPT_PROXYUSERPWD,
+                    Config::get('concrete.proxy.user') . ':' . Config::get('concrete.proxy.password')
+                );
+            }
+        }
+
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($ch);
         if ($response !== false) {
