@@ -29,7 +29,7 @@ class Controller extends Package
     public function install()
     {
         $pkg = parent::install();
-        CaptchaLibrary::add('recaptcha', 'reCAPTCHA', $pkg);
+        CaptchaLibrary::add('recaptcha', t('reCAPTCHA'), $pkg);
         return $pkg;
     }
 }
